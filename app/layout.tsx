@@ -40,11 +40,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-      </head>
-      <body className={`${cinzel.variable} antialiased`}>
-        {children}
-      </body>
-    </html>
-  );
-}
