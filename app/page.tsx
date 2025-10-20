@@ -115,7 +115,7 @@ export default function Home() {
                       marginBottom: '1rem',
                       lineHeight: '1.8'
                     }}>
-                      Software Intern at NVIDIA | Currently pursuing Bachelor's in Computer Science at IIIT Lucknow
+                      Software Intern at NVIDIA | Currently pursuing Bachelor&apos;s in Computer Science at IIIT Lucknow
                     </p>
                     <p style={{ 
                       fontSize: '1.05rem',
@@ -988,7 +988,7 @@ export default function Home() {
             fontStyle: 'italic',
             opacity: 0.7
           }}>
-            "The man who passes the sentence should swing the sword."
+            &quot;The man who passes the sentence should swing the sword.&quot;
           </p>
         </div>
       </footer>
