@@ -1,26 +1,854 @@
 @import "tailwindcss";
 
+/* ==================== THEME VARIABLES ==================== */
+
+/* House Stark Theme */
+:root[data-theme="stark"] {
+  --primary-color: #88a0b8;
+  --secondary-color: #4a5d70;
+  --accent-color: #c5d5e4;
+  --bg-color: #1a1f2e;
+  --text-color: #e8edf2;
+  --card-bg: rgba(45, 51, 64, 0.95);
+  --card-border: #3d4454;
+  --shadow-color: rgba(136, 160, 184, 0.4);
+  --hero-bg: linear-gradient(135deg, #1a1f2e 0%, #242936 50%, #1a1f2e 100%);
+}
+
+/* House Targaryen Theme */
+:root[data-theme="targaryen"] {
+  --primary-color: #c41e3a;
+  --secondary-color: #8b0000;
+  --accent-color: #ff6b6b;
+  --bg-color: #0f0a0a;
+  --text-color: #f5e6d3;
+  --card-bg: rgba(26, 15, 15, 0.95);
+  --card-border: #3a2020;
+  --shadow-color: rgba(196, 30, 58, 0.4);
+  --hero-bg: linear-gradient(135deg, #0f0a0a 0%, #1a0f0f 50%, #0f0a0a 100%);
+}
+
+/* House Lannister Theme */
+:root[data-theme="lannister"] {
+  --primary-color: #d4af37;
+  --secondary-color: #c41e3a;
+  --accent-color: #ffd700;
+  --bg-color: #0d0a08;
+  --text-color: #f5f0e6;
+  --card-bg: rgba(26, 20, 16, 0.95);
+  --card-border: #3a2e20;
+  --shadow-color: rgba(212, 175, 55, 0.4);
+  --hero-bg: linear-gradient(135deg, #0d0a08 0%, #1a1410 50%, #0d0a08 100%);
+}
+
+/* House Baratheon Theme */
+:root[data-theme="baratheon"] {
+  --primary-color: #ffd700;
+  --secondary-color: #1c1c1c;
+  --accent-color: #ffeb3b;
+  --bg-color: #0a0a0a;
+  --text-color: #f5f5f5;
+  --card-bg: rgba(20, 20, 20, 0.95);
+  --card-border: #2d2d2d;
+  --shadow-color: rgba(255, 215, 0, 0.4);
+  --hero-bg: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0a0a0a 100%);
+}
+
+/* Default to Stark */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-color: #88a0b8;
+  --secondary-color: #4a5d70;
+  --accent-color: #c5d5e4;
+  --bg-color: #1a1f2e;
+  --text-color: #e8edf2;
+  --card-bg: rgba(45, 51, 64, 0.95);
+  --card-border: #3d4454;
+  --shadow-color: rgba(136, 160, 184, 0.4);
+  --hero-bg: linear-gradient(135deg, #1a1f2e 0%, #242936 50%, #1a1f2e 100%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ==================== GLOBAL STYLES ==================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+  background: var(--hero-bg);
+  background-attachment: fixed;
+  color: var(--text-color);
+  line-height: 1.8;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.9;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.4px;
+}
+
+/* ==================== SNOWFALL (Stark Only) ==================== */
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  z-index: 9999;
+  pointer-events: none;
+  user-select: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.2em;
+  animation: fall linear infinite;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+/* ==================== PROFILE IMAGE ==================== */
+
+.profile-image-box {
+  position: relative;
+}
+
+.profile-image-box::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color), var(--primary-color));
+  border-radius: 15px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.profile-image-box:hover::before {
+  opacity: 1;
+  animation: borderGlow 2s infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.profile-image-box:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 50px rgba(136, 160, 184, 0.5), 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+.profile-image-box:hover div > img {
+  transform: scale(1.05) !important;
+}
+
+/* ==================== CARD 3D EFFECTS ==================== */
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(136, 160, 184, 0.1), transparent);
+  transform: translateX(-50%);
+  transition: width 0.4s ease;
+  z-index: 0;
+}
+
+.card-3d:hover::before {
+  width: 100%;
+}
+
+.card-3d:hover {
+  transform: perspective(1000px) translateY(-12px) scale(1.03) rotateZ(1deg);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    0 15px 30px var(--shadow-color),
+    0 0 40px var(--shadow-color);
+}
+
+/* ==================== MEDIEVAL BORDERS ==================== */
+
+.medieval-border {
+  position: relative;
+  border: 3px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.medieval-border:hover {
+  border-color: var(--primary-color);
+}
+
+/* ==================== SKILL TAGS ==================== */
+
+.skill-tag {
+  background: linear-gradient(135deg, rgba(45, 51, 64, 1), rgba(36, 41, 54, 1));
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid var(--card-border);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  opacity: 0.9;
+}
+
+.skill-tag::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(136, 160, 184, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.skill-tag:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.skill-tag:hover {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(136, 160, 184, 0.4);
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* ==================== SOCIAL ICONS IN FOOTER ==================== */
+
+footer a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--card-bg), rgba(0, 0, 0, 0.5));
+  border: 2px solid var(--card-border);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+footer a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--shadow-color), transparent);
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+}
+
+footer a:hover::before {
+  width: 120px;
+  height: 120px;
+}
+
+footer a:hover {
+  transform: translateY(-12px) scale(1.2) rotate(360deg);
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--bg-color) !important;
+  border-color: var(--accent-color);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    0 0 40px var(--shadow-color);
+}
+
+/* Special icon rotation on hover */
+footer a svg {
+  transition: all 0.4s ease;
+}
+
+footer a:hover svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+/* ==================== ACHIEVEMENT ICON ANIMATION ==================== */
+
+.achievement-icon-animate {
+  font-size: 3rem;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 0 10px var(--shadow-color));
+  display: inline-block;
+}
+
+.card-3d:hover .achievement-icon-animate {
+  transform: scale(1.25) rotateY(360deg);
+  filter: drop-shadow(0 0 20px var(--shadow-color));
+}
+
+/* ==================== PROJECT/PROFILE CARD IMAGE EFFECTS ==================== */
+
+.card-image-container {
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.card-3d:hover .card-image-container {
+  transform: scale(1.15) rotate(5deg);
+  filter: brightness(1.2) drop-shadow(0 0 15px var(--shadow-color));
+}
+
+/* ==================== LINKS ==================== */
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--accent-color);
+  text-shadow: 0 0 10px var(--shadow-color);
+}
+
+/* ==================== SECTIONS ==================== */
+
+section {
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ==================== SECTION TITLES ==================== */
+
+.section-title-custom {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 2rem);
+  flex-wrap: nowrap;
+}
+
+.title-ornament-custom {
+  font-size: 2rem;
+  color: var(--primary-color);
+  filter: drop-shadow(0 0 10px rgba(136, 160, 184, 0.6));
+  animation: ornamentFloat 3s ease-in-out infinite;
+}
+
+@keyframes ornamentFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ==================== EXPERIENCE CARD ==================== */
+
+.experience-card-custom {
+  background: linear-gradient(135deg, rgba(45, 51, 64, 1), rgba(36, 41, 54, 1));
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 2px solid var(--card-border);
+  border-left: 4px solid var(--primary-color);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card-custom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+  transition: height 0.4s ease;
+}
+
+.experience-card-custom:hover::before {
+  height: 100%;
+}
+
+.experience-card-custom::after {
+  content: '⚔';
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  font-size: 4rem;
+  color: var(--primary-color);
+  opacity: 0.05;
+  transform: translateY(-50%);
+  transition: all 0.4s ease;
+}
+
+.experience-card-custom:hover::after {
+  right: 20px;
+  opacity: 0.1;
+  transform: translateY(-50%) rotate(10deg);
+}
+
+.experience-card-custom:hover {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(136, 160, 184, 0.2);
+  transform: translateY(-8px) translateX(10px) scale(1.02);
+}
+
+.company-logo-img {
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.company-logo-img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(136, 160, 184, 0.5));
+}
+
+/* ==================== TIMELINE (EDUCATION) ==================== */
+
+.timeline-container {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--card-border);
+}
+
+.timeline-item-custom {
+  position: relative;
+  margin-bottom: 3rem;
+  transition: all 0.3s ease;
+}
+
+.timeline-item-custom:hover {
+  transform: translateX(10px);
+}
+
+.timeline-marker-custom {
+  position: absolute;
+  left: -3.65rem;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  border: 4px solid var(--bg-color);
+  box-shadow: 0 0 0 4px var(--card-border);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.timeline-item-custom:hover .timeline-marker-custom {
+  transform: scale(1.3);
+  box-shadow: 
+    0 0 25px var(--primary-color),
+    0 0 50px rgba(136, 160, 184, 0.5);
+}
+
+.timeline-content-custom {
+  background: linear-gradient(135deg, rgba(36, 41, 54, 1), rgba(45, 51, 64, 1));
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 3px solid var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.timeline-content-custom:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== PROJECT CARDS ==================== */
+
+.project-card-custom {
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 2px solid var(--card-border);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.project-card-custom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(136, 160, 184, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.project-card-custom:hover::before {
+  left: 100%;
+}
+
+.project-card-custom::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 15px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.project-card-custom:hover::after {
+  opacity: 0.3;
+}
+
+.project-card-custom:hover {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(136, 160, 184, 0.3),
+    inset 0 1px 0 rgba(136, 160, 184, 0.2);
+  transform: translateY(-15px) rotateX(2deg);
+}
+
+.tech-tag-custom {
+  background: linear-gradient(135deg, rgba(45, 51, 64, 0.8), rgba(36, 41, 54, 0.8));
+  color: var(--text-secondary);
+  padding: 0.4rem 0.9rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.tech-tag-custom:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  transform: translateY(-2px);
+}
+
+/* ==================== PROJECT LINKS ==================== */
+
+.project-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.project-links-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link-icon {
+  color: var(--text-color);
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.project-link-icon:hover {
+  color: var(--primary-color);
+  background: var(--bg-secondary);
+  border-color: var(--primary-color);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(136, 160, 184, 0.3);
+}
+
+/* ==================== CODING PROFILE ICONS ==================== */
+
+.profile-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 2.5rem;
+  border: 3px solid;
+  position: relative;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.profile-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: inherit;
+  opacity: 0;
+  animation: iconPulse 2s infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.card-3d:hover .profile-icon-wrapper {
+  transform: rotateY(360deg) scale(1.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.profile-logo-img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.leetcode-icon {
+  border-color: #ffa116;
+  color: #ffa116;
+  background: radial-gradient(circle, rgba(255, 161, 22, 0.2), rgba(255, 161, 22, 0.05));
+}
+
+.codeforces-icon {
+  border-color: #1f8acb;
+  color: #1f8acb;
+  background: radial-gradient(circle, rgba(31, 138, 203, 0.2), rgba(31, 138, 203, 0.05));
+}
+
+.codechef-icon {
+  border-color: #a67c52;
+  color: #a67c52;
+  background: radial-gradient(circle, rgba(166, 124, 82, 0.2), rgba(166, 124, 82, 0.05));
+}
+
+/* ==================== HIDE NEXT.JS DEV TOOLS ==================== */
+
+/* Target the exact SVG and button */
+svg[data-next-mark-loading="false"],
+svg[data-next-mark-loading="true"],
+svg[data-next-mark-loading],
+button:has(svg[data-next-mark-loading="false"]),
+button:has(svg[data-next-mark-loading="true"]),
+button:has(svg[data-next-mark-loading]),
+button[data-nextjs-dev-tools-button],
+button[data-next-mark],
+button[id="next-logo"],
+.__web-inspector-hide-shortcut__,
+[data-nextjs-dev-tools-button],
+[data-next-mark="true"],
+[data-next-mark-loading],
+#next-logo {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  left: -99999px !important;
+  top: -99999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -99999 !important;
+}
+
+/* Extra aggressive hiding for the SVG itself */
+svg[viewBox="0 0 40 40"],
+body > button[id^="next"],
+body > button[data-next],
+body > button > svg[viewBox="0 0 40 40"],
+button > svg[width="40"][height="40"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide any button containing Next.js logo SVG */
+button:has(> svg[width="40"][height="40"]),
+button:has(> svg[viewBox="0 0 40 40"]) {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  section {
+    padding: 3rem 1rem;
+  }
+
+  .card-3d:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  footer a {
+    width: 50px;
+    height: 50px;
+  }
+
+  footer a:hover {
+    transform: translateY(-8px) scale(1.15) rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.85rem;
+    letter-spacing: 1px;
+  }
+
+  h2 {
+    font-size: 1.65rem;
+    letter-spacing: 1.5px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  section {
+    padding: 2rem 0.75rem;
+  }
+
+  footer a {
+    width: 45px;
+    height: 45px;
+  }
 }
